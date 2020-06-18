@@ -10,7 +10,7 @@ First you need the base org.kde.Sdk and org.kde.Platform from flathub.org.
    flatpak install flathub org.kde.Platform//5.14
    ```
    
-## Build / Run
+## Build / Install
 1. Add buid.sh script file first
    ```
    sh buid.sh
@@ -27,14 +27,30 @@ As the Flatpak json file gets the files from the Yuzu master branch you can just
 
 I will keep the master branch until Yuzu team makes a stable branch to choose form.
 
+## After build and install Yuzu flatpak
+Follow the instruction on the Yuzu webbpage.
+   ```
+   https://yuzu-emu.org/help/quickstart/
+   ```
+
 ## Note
 If you get this error:
 
    ```
    Error: module telepathy-glib: Failed to execute child process "eu-strip" (No such file or directory)
    ```
+Then you are missing elfutils on your system. So you need to install it before continue
 
 Debian based distro (Debian, Ubuntu, Linux Mint, PopOS)
    ```
    sudo apt install elfutils
    ```
+Arch based distro (Arch, Manjaro)
+   ```
+   sudo pacman -S elfutils
+   ```
+Fedora based distro
+   ```
+   sudo yum install elfutils
+   ```
+   
