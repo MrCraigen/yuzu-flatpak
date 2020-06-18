@@ -28,7 +28,7 @@ As the Flatpak json file gets the files from the Yuzu master branch you can just
 I will keep the master branch until Yuzu team makes a stable branch to choose form.
 
 ## After build and install Yuzu flatpak
-Follow the instruction on the Yuzu webbpage.
+Follow the instruction on the Yuzu webpage.
    ```
    https://yuzu-emu.org/help/quickstart/
    ```
