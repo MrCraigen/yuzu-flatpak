@@ -162,7 +162,9 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "https://github.com/yuzu-emu/yuzu.git"
+                    "url": "https://github.com/yuzu-emu/yuzu-mainline.git",
+                    "tag": "mainline-0-285",
+                    "commit": "1267df3b494ed20dfc3668714ef9f3155a26a493"
                 },
                 {
                     "type": "file",
