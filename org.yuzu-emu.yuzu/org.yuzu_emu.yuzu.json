@@ -1,7 +1,7 @@
 {
     "app-id": "org.yuzu_emu.yuzu",
     "runtime": "org.kde.Platform",
-    "runtime-version": "5.12",
+    "runtime-version": "5.14",
     "sdk": "org.kde.Sdk",
     "command": "yuzu",
     "rename-desktop-file": "yuzu.desktop",
@@ -10,6 +10,7 @@
     "finish-args": [
         "--device=all",
         "--socket=x11",
+        "--socket=wayland",
         "--socket=pulseaudio",
         "--share=network",
         "--share=ipc",
@@ -19,6 +20,126 @@
         "--filesystem=host:ro"
     ],
     "modules": [
+        "shared-modules/python2.7/python-2.7.json",
+        {
+            "name": "boost",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://dl.bintray.com/boostorg/release/1.71.0/source/boost_1_71_0.tar.bz2",
+                    "sha256": "d73a8da01e8bf8c7eda40b4c84915071a8c8a0df4a6734537ddde4a8580524ee"
+                }
+            ],
+            "buildsystem": "simple",
+            "build-commands": [
+                "./bootstrap.sh --prefix=${FLATPAK_DEST}",
+                "./b2 -j ${FLATPAK_BUILDER_N_JOBS} headers",
+                "mkdir -p ${FLATPAK_DEST}/include/boost",
+                "cp -r boost/* ${FLATPAK_DEST}/include/boost"
+            ]
+        },
+        {
+            "name": "fmt",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release"
+            ],
+            "cleanup": [
+                "/include",
+                "*.a"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/fmtlib/fmt/archive/6.2.1.tar.gz",
+                    "sha256": "5edf8b0f32135ad5fafb3064de26d063571e95e8ae46829c2f4f4b52696bbff0"
+                }
+            ]
+        },
+        {
+            "name": "catch2",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/catchorg/catch2",
+                    "tag": "v2.12.2",
+                    "commit": "b1b5cb812277f367387844aab46eb2d3b15d03cd"
+                }
+            ]
+        },
+        {
+            "name": "fmt",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DCMAKE_BUILD_TYPE=Release"
+            ],
+            "cleanup": [
+                "/include",
+                "*.a"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/fmtlib/fmt/archive/6.2.1.tar.gz",
+                    "sha256": "5edf8b0f32135ad5fafb3064de26d063571e95e8ae46829c2f4f4b52696bbff0"
+                }
+            ]
+        },
+        {
+            "name": "lz4",
+            "no-autogen": true,
+            "make-install-args": ["PREFIX=/app", "LIBDIR=/app/lib"], 
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://github.com/lz4/lz4/archive/v1.9.2.tar.gz",
+                    "sha256": "658ba6191fa44c92280d4aa2c271b0f4fbc0e34d249578dd05e50e76d0e5efcc"
+                }
+            ]
+        },
+        {
+            "name": "nlohmann-json",
+            "buildsystem": "cmake-ninja",
+            "builddir": true,
+            "config-opts": [
+                "-DBUILD_TESTING:BOOL=OFF"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/nlohmann/json",
+                    "tag": "v3.7.3",
+                    "commit": "e7b3b40b5a95bc74b9a7f662830a27c49ffc01b4"
+                }
+            ]
+        },
+        {
+            "name": "zstd",
+            "buildsystem": "meson",
+            "subdir": "build/meson",
+            "config-opts": [
+                "-Dbin_programs=false",
+                "-Dbin_contrib=false"
+            ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "sha256": "59ef70ebb757ffe74a7b3fe9c305e2ba3350021a918d168a046c6300aeea9315",
+                    "url": "https://github.com/facebook/zstd/releases/download/v1.4.4/zstd-1.4.4.tar.gz"
+                },
+                {
+                    "type": "patch",
+                    "path": "patches/zstd_meson.patch"
+                }
+            ]
+        },
         {
             "name": "yuzu",
             "buildsystem": "cmake-ninja",

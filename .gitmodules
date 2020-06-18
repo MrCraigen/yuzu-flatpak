@@ -1,0 +1,3 @@
+[submodule "org.yuzu-emu.yuzu/shared-modules"]
+	path = org.yuzu-emu.yuzu/shared-modules
+	url = https://github.com/flathub/shared-modules.git
